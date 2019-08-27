@@ -26,6 +26,8 @@ import subprocess
 import xml.etree.ElementTree as ET
 import tempfile
 
+from sys import platform
+
 from . import util
 from . import layers
 #from .layers import clean
@@ -376,7 +378,11 @@ def run(script='TEMP3D_default.mlx', log=None, ml_log=None,
         return code of meshlabserver process; 0 if successful
     """
     if cmd is None:
-        cmd = 'xvfb-run -a -s "-screen 0 800x600x24" meshlabserver'
+        if platform == "linux":
+            cmd = 'xvfb-run -a -s "-screen 0 800x600x24" meshlabserver'
+        else:
+            cmd = 'meshlabserver'
+
         if ml_log is not None:
             # Initialize ml_log
             ml_log_file = open(ml_log, 'w')

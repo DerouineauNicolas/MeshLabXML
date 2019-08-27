@@ -272,10 +272,16 @@ def parse_topology(ml_log, log=None, ml_version='1.3.4BETA', print_output=False)
         for line in fread:
             if 'V:' in line:
                 vert_edge_face = line.replace('V:', ' ').replace('E:', ' ').replace('F:', ' ').split()
-                topology['vert_num'] = int(vert_edge_face[0])
-                topology['edge_num'] = int(vert_edge_face[1])
-                topology['face_num'] = int(vert_edge_face[2])
-            if 'Unreferenced Vertices' in line:
+                if 'LOG' in vert_edge_face[0]:
+                    topology['vert_num'] = int(vert_edge_face[1])
+                    topology['edge_num'] = int(vert_edge_face[2])
+                    topology['face_num'] = int(vert_edge_face[3])
+                else:
+                    topology['vert_num'] = int(vert_edge_face[0])
+                    topology['edge_num'] = int(vert_edge_face[1])
+                    topology['face_num'] = int(vert_edge_face[2])
+
+            '''if 'Unreferenced Vertices' in line:
                 topology['unref_vert_num'] = int(line.split()[2])
             if 'Boundary Edges' in line:
                 topology['boundry_edge_num'] = int(line.split()[2])
@@ -296,7 +302,7 @@ def parse_topology(ml_log, log=None, ml_version='1.3.4BETA', print_output=False)
                 if topology['hole_num'] == 'a':
                     topology['hole_num'] = 'undefined'
                 else:
-                    topology['hole_num'] = int(topology['hole_num'])
+                    topology['hole_num'] = int(topology['hole_num'])'''
     for key, value in topology.items():
         if log is not None:
             log_file = open(log, 'a')
