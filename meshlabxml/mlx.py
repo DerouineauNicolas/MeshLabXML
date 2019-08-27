@@ -376,7 +376,7 @@ def run(script='TEMP3D_default.mlx', log=None, ml_log=None,
         return code of meshlabserver process; 0 if successful
     """
     if cmd is None:
-        cmd = 'meshlabserver'
+        cmd = 'xvfb-run -a -s "-screen 0 800x600x24" meshlabserver'
         if ml_log is not None:
             # Initialize ml_log
             ml_log_file = open(ml_log, 'w')
